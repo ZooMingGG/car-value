@@ -19,8 +19,12 @@ const coockieSession = require('cookie-session');
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
-          type: 'sqlite',
-          database: config.get<string>('DB_NAME'),
+          type: 'postgres',
+          host: config.get<string>('POSTGRES_HOST'),
+          port: Number(config.get<string>('POSTGRES_PORT')),
+          username: config.get<string>('POSTGRES_USER'),
+          password: config.get<string>('POSTGRES_PASSWORD'),
+          database: config.get<string>('POSTGRES_DB'),
           entities: [User, Report],
           synchronize: true,
         }
