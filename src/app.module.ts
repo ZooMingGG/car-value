@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
+import { AuthModule } from './auth/auth.module';
 import { User } from './users/user.entity';
 import { Report } from './reports/report.entity';
 const coockieSession = require('cookie-session');
@@ -27,6 +28,7 @@ const coockieSession = require('cookie-session');
     }),
     UsersModule,
     ReportsModule,
+    AuthModule
   ],
   providers: [
     {
