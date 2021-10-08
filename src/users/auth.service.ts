@@ -9,7 +9,7 @@ const scrypt = promisify(_scrypt);
 export class AuthService {
   constructor(private usersService: UsersService) { }
 
-  async signup(email: string, password: string) {
+  async signUp(email: string, password: string, session: any) {
     const candidates = await this.usersService.find(email);
 
     if (candidates.length) {
@@ -24,10 +24,12 @@ export class AuthService {
 
     const user = await this.usersService.create(email, result);
 
+    session.userId = user.id;
+
     return user;
   }
 
-  async signin(email: string, password: string) {
+  async signIn(email: string, password: string, session: any) {
     const [user] = await this.usersService.find(email);
 
     if (!user) {
@@ -42,6 +44,12 @@ export class AuthService {
       throw new BadRequestException('Bad password');
     }
 
+    session.userId = user.id;
+
     return user;
+  }
+
+  signOut(session: any) {
+    session.userId = null;
   }
 }

@@ -13,16 +13,18 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  findOne(id: number) {
-    if (!id) {
-      return null;
+  async findOne(id: number) {
+    const user = await this.repo.findOne(id);
+
+    if (!user) {
+      throw new NotFoundException('User now found.');
     }
 
-    return this.repo.findOne(id);
+    return user;
   }
 
   find(email: string) {
-    return this.repo.find({ email })
+    return this.repo.find({ email });
   }
 
   async update(id: number, attrs: Partial<User>) {

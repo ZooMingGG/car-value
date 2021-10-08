@@ -33,33 +33,23 @@ export class UsersController {
   }
 
   @Post('/signup')
-  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signup(body.email, body.password);
-    session.userId = user.id;
-    return user;
+  createUser(@Body() body: CreateUserDto, @Session() session: any) {
+    return this.authService.signUp(body.email, body.password, session);
   }
 
   @Post('/signin')
-  async signIn(@Body() body: CreateUserDto, @Session() session: any) {
-    const user = await this.authService.signin(body.email, body.password);
-    session.userId = user.id;
-    return user;
+  signIn(@Body() body: CreateUserDto, @Session() session: any) {
+    return this.authService.signIn(body.email, body.password, session);
   }
 
   @Post('/signout')
   signOut(@Session() session: any) {
-    session.userId = null;
+    this.authService.signOut(session);
   }
 
   @Get('/:id')
-  async findUser(@Param('id') id: string) {
-    const user = await this.usersService.findOne(parseInt(id));
-
-    if (!user) {
-      throw new NotFoundException('User now found.');
-    }
-
-    return user;
+  findUser(@Param('id') id: string) {
+    return this.usersService.findOne(parseInt(id));
   }
 
   @Get()
