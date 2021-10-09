@@ -7,32 +7,31 @@ import { ReportsModule } from './reports/reports.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './users/user.entity';
 import { Report } from './reports/report.entity';
+
 const coockieSession = require('cookie-session');
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `env/.env.${process.env.NODE_ENV}`
+      envFilePath: `env/.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          type: 'postgres',
-          host: config.get<string>('POSTGRES_HOST'),
-          port: Number(config.get<string>('POSTGRES_PORT')),
-          username: config.get<string>('POSTGRES_USER'),
-          password: config.get<string>('POSTGRES_PASSWORD'),
-          database: config.get<string>('POSTGRES_DB'),
-          entities: [User, Report],
-          synchronize: true,
-        }
-      }
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get<string>('POSTGRES_HOST'),
+        port: Number(config.get<string>('POSTGRES_PORT')),
+        username: config.get<string>('POSTGRES_USER'),
+        password: config.get<string>('POSTGRES_PASSWORD'),
+        database: config.get<string>('POSTGRES_DB'),
+        entities: [User, Report],
+        synchronize: true,
+      }),
     }),
     UsersModule,
     ReportsModule,
-    AuthModule
+    AuthModule,
   ],
   providers: [
     {
@@ -41,10 +40,10 @@ const coockieSession = require('cookie-session');
         whitelist: true,
       }),
     },
-  ]
+  ],
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
+  private configure(consumer: MiddlewareConsumer): void {
     consumer.apply(coockieSession({ keys: ['asdfasfd'] })).forRoutes('*');
   }
 }

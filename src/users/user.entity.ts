@@ -5,39 +5,39 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 import { Report } from 'src/reports/report.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  public id: number;
 
   @Column({ default: true })
-  admin: boolean;
+  public admin: boolean;
 
   @Column()
-  email: string;
+  public email: string;
 
   @Column()
-  password: string;
+  public password: string;
 
   @OneToMany(() => Report, (report) => report.user)
-  reports: Report[]
+  public reports: Report[];
 
   @AfterInsert()
-  logInsert() {
+  public logInsert(): void {
     console.log('Inserted user with id: ', this.id);
   }
 
   @AfterUpdate()
-  logUpdate() {
+  public logUpdate(): void {
     console.log('Updated user with id: ', this.id);
   }
 
   @AfterRemove()
-  logRemove() {
+  public logRemove(): void {
     console.log('Removed user with id: ', this.id);
   }
 }

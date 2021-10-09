@@ -1,9 +1,9 @@
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
 
 export class UserDto {
   @Expose()
-  id: string;
+  public id: string;
 
   @Expose()
-  email: string;
+  public email: string;
 }

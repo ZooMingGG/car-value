@@ -1,34 +1,34 @@
-import { Expose, Transform } from "class-transformer";
+import { Expose, Transform } from 'class-transformer';
 
 export class ReportDto {
   @Expose()
-  id: number;
+  public id: number;
 
   @Expose()
-  approved: boolean;
+  public approved: boolean;
 
   @Expose()
-  price: number;
+  public price: number;
 
   @Expose()
-  year: number;
+  public year: number;
 
   @Expose()
-  lng: number;
+  public lng: number;
 
   @Expose()
-  lat: number;
+  public lat: number;
 
   @Expose()
-  make: string;
+  public make: string;
 
   @Expose()
-  model: string;
+  public model: string;
 
   @Expose()
-  mileage: number;
+  public mileage: number;
 
   @Transform(({ obj }) => obj.user.id)
   @Expose()
-  userId: number;
+  public userId: number;
 }

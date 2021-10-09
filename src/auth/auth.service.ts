@@ -1,15 +1,24 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
+import { User } from 'src/users/user.entity';
+import { UsersService } from '../users/users.service';
 
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) { }
+  public constructor(private readonly usersService: UsersService) {}
 
-  async signUp(email: string, password: string, session: any) {
+  public async signUp(
+    email: string,
+    password: string,
+    session: any,
+  ): Promise<User> {
     const candidates = await this.usersService.find(email);
 
     if (candidates.length) {
@@ -20,7 +29,7 @@ export class AuthService {
 
     const hash = (await scrypt(password, salt, 32)) as Buffer;
 
-    const result = salt + '.' + hash.toString('hex');
+    const result = `${salt}.${hash.toString('hex')}`;
 
     const user = await this.usersService.create(email, result);
 
@@ -29,7 +38,11 @@ export class AuthService {
     return user;
   }
 
-  async signIn(email: string, password: string, session: any) {
+  public async signIn(
+    email: string,
+    password: string,
+    session: any,
+  ): Promise<User> {
     const [user] = await this.usersService.find(email);
 
     if (!user) {
@@ -49,7 +62,7 @@ export class AuthService {
     return user;
   }
 
-  signOut(session: any) {
+  public signOut(session: any): void {
     session.userId = null;
   }
 }

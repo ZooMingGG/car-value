@@ -4,32 +4,32 @@ import { User } from 'src/users/user.entity';
 @Entity()
 export class Report {
   @PrimaryGeneratedColumn()
-  id: number;
+  public id: number;
 
   @Column({ default: false })
-  approved: boolean;
+  public approved: boolean;
 
   @Column()
-  price: number;
+  public price: number;
 
   @Column()
-  make: string;
+  public make: string;
 
   @Column()
-  model: string;
+  public model: string;
 
   @Column()
-  year: number;
+  public year: number;
 
   @Column()
-  lng: number;
+  public lng: number;
 
   @Column()
-  lat: number;
+  public lat: number;
 
   @Column()
-  mileage: number;
+  public mileage: number;
 
   @ManyToOne(() => User, (user) => user.reports)
-  user: User;
+  public user: User;
 }

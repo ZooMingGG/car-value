@@ -19,6 +19,7 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     'no-plusplus': 'off',
+    'no-param-reassign': 0,
     'import/no-unresolved': 'error',
     'prettier/prettier': 'error',
     'arrow-parens': ['error', 'always'],
@@ -50,7 +51,7 @@ module.exports = {
       'error',
       { devDependencies: ['**/*.spec.ts', '**/*.e2e-spec.ts'] },
     ],
-    'prettier/prettier': ['error', {endOfLine: 'auto'}],
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
   overrides: [
     {
