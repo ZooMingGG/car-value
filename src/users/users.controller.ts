@@ -6,24 +6,24 @@ import {
   Delete,
   Query,
   Body,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { AuthGuard } from './../guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { User } from './user.entity';
 
 @Controller('user')
 @Serialize(UserDto)
 export class UsersController {
-  constructor(private usersService: UsersService) { }
+  public constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(AuthGuard)
   @Get('/getme')
-  getMe(@CurrentUser() user: User) {
+  public getMe(@CurrentUser() user: User): User {
     return user;
   }
 
