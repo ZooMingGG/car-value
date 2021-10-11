@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { AuthModule } from './auth/auth.module';
-import { User } from './users/user.entity';
-import { Report } from './reports/report.entity';
+
+import dbConfiguration from './config/db.config';
 
 const coockieSession = require('cookie-session');
 
@@ -14,19 +14,12 @@ const coockieSession = require('cookie-session');
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `env/.env.${process.env.NODE_ENV}`,
+      load: [dbConfiguration],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get<string>('POSTGRES_HOST'),
-        port: Number(config.get<string>('POSTGRES_PORT')),
-        username: config.get<string>('POSTGRES_USER'),
-        password: config.get<string>('POSTGRES_PASSWORD'),
-        database: config.get<string>('POSTGRES_DB'),
-        entities: [User, Report],
-        synchronize: true,
+      useFactory: async (configService: ConfigService) => ({
+        ...configService.get('database'),
       }),
     }),
     UsersModule,
