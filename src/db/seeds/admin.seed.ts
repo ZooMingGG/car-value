@@ -8,7 +8,7 @@ const scrypt = promisify(_scrypt);
 interface AdminSeed {
   email: string;
   password: string;
-  isAdmin: true;
+  isAdmin: boolean;
 }
 
 export const generateAdminSeed = async (): Promise<AdminSeed> => {
@@ -20,11 +20,11 @@ export const generateAdminSeed = async (): Promise<AdminSeed> => {
     32,
   )) as Buffer;
 
-  const hashedpassword = `${salt}.${hash.toString('hex')}`;
+  const hashedPassword = `${salt}.${hash.toString('hex')}`;
 
   return {
     email: 'admin@email.com',
-    password: hashedpassword,
+    password: hashedPassword,
     isAdmin: true,
   };
 };
