@@ -1,5 +1,4 @@
-import { APP_PIPE } from '@nestjs/core';
-import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
@@ -7,8 +6,6 @@ import { ReportsModule } from './reports/reports.module';
 import { AuthModule } from './auth/auth.module';
 
 import dbConfiguration from './config/db.config';
-
-const coockieSession = require('cookie-session');
 
 @Module({
   imports: [
@@ -26,17 +23,5 @@ const coockieSession = require('cookie-session');
     ReportsModule,
     AuthModule,
   ],
-  providers: [
-    {
-      provide: APP_PIPE,
-      useValue: new ValidationPipe({
-        whitelist: true,
-      }),
-    },
-  ],
 })
-export class AppModule {
-  private configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(coockieSession({ keys: ['asdfasfd'] })).forRoutes('*');
-  }
-}
+export class AppModule {}

@@ -6,4 +6,7 @@ export class UserDto {
 
   @Expose()
   public email: string;
+
+  @Expose()
+  public isAdmin: boolean;
 }

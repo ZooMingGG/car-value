@@ -1,50 +1,26 @@
-import {
-  Controller,
-  Post,
-  Get,
-  Query,
-  Patch,
-  Param,
-  Body,
-  UseGuards,
-} from '@nestjs/common';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { User } from 'src/users/user.entity';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { AdminGuard } from 'src/guards/admin.guard';
-import { CreateReportDto } from './dtos/create-report.dto';
-import { ApproveReportDto } from './dtos/approve-report.dto';
+import { Controller, UseFilters } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
+import { RpcExceptionFilter } from 'src/filters/rpc-exception.filter';
 import { ReportsService } from './reports.service';
-import { AuthGuard } from '../guards/auth.guard';
-import { ReportDto } from './dtos/report.dto';
-import { GetEstimateDto } from './dtos/get-estimate.dto';
 import { Report } from './report.entity';
 
-@Controller('reports')
+@UseFilters(new RpcExceptionFilter())
+@Controller()
 export class ReportsController {
   public constructor(private readonly reportsService: ReportsService) {}
 
-  @Get()
-  public getEstimate(@Query() query: GetEstimateDto): Promise<string> {
+  @MessagePattern({ cmd: 'createEstimate' })
+  public getEstimate(query): Promise<string> {
     return this.reportsService.createEstimate(query);
   }
 
-  @Post()
-  @UseGuards(AuthGuard)
-  @Serialize(ReportDto)
-  public createReport(
-    @Body() body: CreateReportDto,
-    @CurrentUser() user: User,
-  ): Promise<Report> {
-    return this.reportsService.create(body, user);
+  @MessagePattern({ cmd: 'createReport' })
+  public createReport({ reportDto, user }): Promise<Report> {
+    return this.reportsService.create(reportDto, user);
   }
 
-  @Patch('/:id')
-  @UseGuards(AdminGuard)
-  public approveReport(
-    @Param('id') id: string,
-    @Body() body: ApproveReportDto,
-  ): Promise<Report> {
-    return this.reportsService.changeApproval(id, body.approved);
+  @MessagePattern({ cmd: 'approveReport' })
+  public approveReport({ id, approved }): Promise<Report> {
+    return this.reportsService.changeApproval(id, approved);
   }
 }

@@ -1,33 +1,21 @@
-import { Controller, Post, Body, Session } from '@nestjs/common';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { UserDto } from 'src/users/dtos/user.dto';
+import { Controller, UseFilters } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { MessagePattern } from '@nestjs/microservices';
+import { RpcExceptionFilter } from 'src/filters/rpc-exception.filter';
 import { AuthService } from './auth.service';
 
-@Controller('auth')
-@Serialize(UserDto)
+@UseFilters(new RpcExceptionFilter())
+@Controller()
 export class AuthController {
   public constructor(private readonly authService: AuthService) {}
 
-  @Post('/signup')
-  public createUser(
-    @Body() body: CreateUserDto,
-    @Session() session: any,
-  ): Promise<User> {
-    return this.authService.signUp(body.email, body.password, session);
+  @MessagePattern({ cmd: 'signUp' })
+  public createUser(body): Promise<User> {
+    return this.authService.signUp(body.email, body.password);
   }
 
-  @Post('/signin')
-  public signIn(
-    @Body() body: CreateUserDto,
-    @Session() session: any,
-  ): Promise<User> {
-    return this.authService.signIn(body.email, body.password, session);
-  }
-
-  @Post('/signout')
-  public signOut(@Session() session: any): void {
-    this.authService.signOut(session);
+  @MessagePattern({ cmd: 'signIn' })
+  public signIn({ email, password }): Promise<User> {
+    return this.authService.signIn(email, password);
   }
 }
