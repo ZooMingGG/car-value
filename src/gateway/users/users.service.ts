@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { User } from 'src/modules/users/user.entity';
 import { UpdateUserPayload } from './models/user.models';
-import { User } from '../../users/user.entity';
 
 @Injectable()
 export class UsersService {

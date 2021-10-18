@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Session } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { UserDto } from 'src/users/dtos/user.dto';
-import { User } from 'src/users/user.entity';
-import { CreateUserDto } from '../../auth/dtos/create-user.dto';
+import { UserDto } from 'src/modules/users/dtos/user.dto';
+import { User } from 'src/modules/users/user.entity';
+import { CreateUserDto } from 'src/modules/auth/dtos/create-user.dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')

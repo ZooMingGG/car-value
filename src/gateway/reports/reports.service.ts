@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { CreateReportDto } from 'src/reports/dtos/create-report.dto';
-import { Report } from 'src/reports/report.entity';
-import { User } from 'src/users/user.entity';
-import { GetEstimateDto } from '../../reports/dtos/get-estimate.dto';
+import { CreateReportDto } from 'src/modules/reports/dtos/create-report.dto';
+import { Report } from 'src/modules/reports/report.entity';
+import { User } from 'src/modules/users/user.entity';
+import { GetEstimateDto } from 'src/modules/reports/dtos/get-estimate.dto';
 import {
   ChangeApprovalPayload,
   CreateEstimatePayload,

@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, tap } from 'rxjs';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/modules/users/user.entity';
+import { CreateUserDto } from 'src/modules/auth/dtos/create-user.dto';
 import { SignInPayload, SignUpPayload } from './models/auth.models';
-import { CreateUserDto } from '../../auth/dtos/create-user.dto';
 
 @Injectable()
 export class AuthService {

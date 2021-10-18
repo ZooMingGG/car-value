@@ -8,16 +8,16 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { Report } from 'src/reports/report.entity';
+import { Report } from 'src/modules/reports/report.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { User } from 'src/users/user.entity';
-import { ReportDto } from 'src/reports/dtos/report.dto';
-import { GetEstimateDto } from 'src/reports/dtos/get-estimate.dto';
+import { User } from 'src/modules/users/user.entity';
+import { ReportDto } from 'src/modules/reports/dtos/report.dto';
+import { GetEstimateDto } from 'src/modules/reports/dtos/get-estimate.dto';
 import { Observable } from 'rxjs';
-import { ApproveReportDto } from '../../reports/dtos/approve-report.dto';
+import { ApproveReportDto } from 'src/modules/reports/dtos/approve-report.dto';
+import { CreateReportDto } from 'src/modules/reports/dtos/create-report.dto';
+import { CurrentUser } from 'src/modules/users/decorators/current-user.decorator';
 import { AdminGuard } from '../../guards/admin.guard';
-import { CreateReportDto } from '../../reports/dtos/create-report.dto';
-import { CurrentUser } from '../../users/decorators/current-user.decorator';
 import { AuthGuard } from '../../guards/auth.guard';
 import { ReportsService } from './reports.service';
 

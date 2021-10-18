@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { APP_PIPE } from '@nestjs/core';
-import { CurrentUserMiddleware } from 'src/users/middlewares/current-user.middleware';
+import { CurrentUserMiddleware } from 'src/modules/users/middlewares/current-user.middleware';
 import { AuthController } from './auth/auth.controller';
 import { ReportsController } from './reports/reports.controller';
 import { ReportsService } from './reports/reports.service';

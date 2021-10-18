@@ -9,11 +9,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { UserDto } from 'src/users/dtos/user.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { User } from 'src/users/user.entity';
+import { UserDto } from 'src/modules/users/dtos/user.dto';
+import { CurrentUser } from 'src/modules/users/decorators/current-user.decorator';
+import { User } from 'src/modules/users/user.entity';
 import { Observable } from 'rxjs';
-import { UpdateUserDto } from '../../users/dtos/update-user.dto';
+import { UpdateUserDto } from 'src/modules/users/dtos/update-user.dto';
 import { AuthGuard } from '../../guards/auth.guard';
 import { UsersService } from './users.service';
 

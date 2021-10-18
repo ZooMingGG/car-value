@@ -1,5 +1,5 @@
 import { Controller, UseFilters } from '@nestjs/common';
-import { User } from 'src/users/user.entity';
+import { User } from 'src/modules/users/user.entity';
 import { MessagePattern } from '@nestjs/microservices';
 import { RpcExceptionFilter } from 'src/filters/rpc-exception.filter';
 import { MicroServiceMessagePattern } from './enums/message-pattern.enum';
