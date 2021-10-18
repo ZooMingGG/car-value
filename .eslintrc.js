@@ -35,6 +35,8 @@ module.exports = {
         allow: ['constructors'],
       },
     ],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
     'no-unused-vars': 'off',
     'class-methods-use-this': 'off',
     'import/prefer-default-export': 'off',
