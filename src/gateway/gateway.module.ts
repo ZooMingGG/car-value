@@ -10,6 +10,7 @@ import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 
 const coockieSession = require('cookie-session');
+require('dotenv').config({ path: `./env/.env.${process.env.NODE_ENV}` });
 
 @Module({
   imports: [
@@ -18,8 +19,8 @@ const coockieSession = require('cookie-session');
         name: 'MAIN_SERVICE',
         transport: Transport.TCP,
         options: {
-          host: '127.0.0.1',
-          port: 8888,
+          host: process.env.MICROSERVICE_HOST,
+          port: Number(process.env.MICROSERVICE_PORT),
         },
       },
     ]),

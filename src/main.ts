@@ -11,7 +11,7 @@ async function bootstrap(): Promise<void> {
     transport: Transport.TCP,
     options: {
       host: process.env.MICROSERVICE_HOST,
-      port: process.env.MICROSERVICE_PORT,
+      port: Number(process.env.MICROSERVICE_PORT),
     },
   });
   await app.listen();
