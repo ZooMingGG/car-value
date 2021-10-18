@@ -8,11 +8,16 @@ import { UsersService } from './users.service';
 import { User } from './user.entity';
 
 @UseFilters(new RpcExceptionFilter())
-@Serialize(UserDto)
 @Controller()
 export class UsersController {
   public constructor(private readonly usersService: UsersService) {}
 
+  @MessagePattern({ cmd: MicroServiceMessagePattern.CREATE_USER })
+  public createUser({ email, password }): Promise<User> {
+    return this.usersService.create(email, password);
+  }
+
+  @Serialize(UserDto)
   @MessagePattern({ cmd: MicroServiceMessagePattern.FIND_ONE })
   public findUser(id: number): Promise<User> {
     return this.usersService.findOne(id);
@@ -23,11 +28,13 @@ export class UsersController {
     return this.usersService.find(email);
   }
 
+  @Serialize(UserDto)
   @MessagePattern({ cmd: MicroServiceMessagePattern.DELETE_USER })
   public removeUser(id: number): Promise<User> {
     return this.usersService.remove(id);
   }
 
+  @Serialize(UserDto)
   @MessagePattern({ cmd: MicroServiceMessagePattern.UPDATE_USER })
   public updateUser({ id, attrs }): Promise<User> {
     return this.usersService.update(id, attrs);
